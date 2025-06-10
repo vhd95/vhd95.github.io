@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hassbro Awards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --hassbro-blue: #008FD5;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+        }
+        
+        .hassbro-gradient {
+            background: linear-gradient(135deg, var(--hassbro-blue), #0070a8);
+        }
+        
+        .btn-hassbro {
+            background-color: var(--hassbro-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hassbro:hover {
+            background-color: #0070a8;
+        }
+        
+        .btn-add {
+            background-color: #0070a8;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-add:hover {
+            background-color: #005a8c;
+        }
+        
+        .trophy-icon {
+            color: #FFD700;
+            filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5));
+        }
+        
+        .award-entry {
+            transition: all 0.3s ease;
+        }
+        
+        .award-entry:hover {
+            box-shadow: 0 4px 12px rgba(0, 143, 213, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="hassbro-gradient text-white py-6 shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl md:text-4xl font-bold flex items-center">
+                        <span class="trophy-icon mr-3">🏆</span>
+                        Hassbro
+                    </h1>
+                    <div class="hidden md:block">
+                        <p class="italic">Making The World Cry</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Award-Vorschläge einreichen</h2>
+                <p class="mb-6 text-gray-600">Hier kannst du mehrere Vorschläge für die Hassbro Awards einreichen.</p>
+                
+                <form id="awardForm" class="space-y-6">
+                    <div id="awardEntries" class="space-y-4">
+                        <!-- Initial Award Entry -->
+                        <div class="award-entry bg-blue-50 p-5 rounded-lg">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-medium text-gray-700">Award-Vorschlag #1</h3>
+                                <div class="entry-number hidden">1</div>
+                            </div>
+                            <textarea class="award-suggestion w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button type="button" id="addAwardBtn" class="btn-add text-white py-3 px-6 rounded-md flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Weiteren Award hinzufügen
+                        </button>
+                        <button type="submit" class="btn-hassbro text-white py-3 px-8 rounded-md flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            Vorschläge einreichen
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="hassbro-gradient text-white py-4 mt-auto">
+            <div class="container mx-auto px-4 text-center">
+                <p>© 2023 Hassbro | Making The World Cry</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+                    <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Vielen Dank!</h3>
+                <p id="successMessage" class="text-gray-600 mb-6">Deine Award-Vorschläge wurden erfolgreich eingereicht.</p>
+                <button id="closeModalBtn" class="btn-hassbro text-white py-2 px-6 rounded-md">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const awardForm = document.getElementById('awardForm');
+            const awardEntries = document.getElementById('awardEntries');
+            const addAwardBtn = document.getElementById('addAwardBtn');
+            const successModal = document.getElementById('successModal');
+            const successMessage = document.getElementById('successMessage');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            
+            let entryCount = 1;
+            
+            // Add new award entry
+            addAwardBtn.addEventListener('click', function() {
+                entryCount++;
+                
+                const newEntry = document.createElement('div');
+                newEntry.className = 'award-entry bg-blue-50 p-5 rounded-lg';
+                newEntry.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-medium text-gray-700">Award-Vorschlag #${entryCount}</h3>
+                        <button type="button" class="remove-entry text-red-500 hover:text-red-700 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div class="entry-number hidden">${entryCount}</div>
+                    </div>
+                    <textarea class="award-suggestion w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
+                `;
+                
+                awardEntries.appendChild(newEntry);
+                
+                // Add event listener to remove button
+                const removeBtn = newEntry.querySelector('.remove-entry');
+                removeBtn.addEventListener('click', function() {
+                    awardEntries.removeChild(newEntry);
+                    updateEntryNumbers();
+                });
+            });
+            
+            // Update entry numbers after removal
+            function updateEntryNumbers() {
+                const entries = awardEntries.querySelectorAll('.award-entry');
+                entries.forEach((entry, index) => {
+                    const number = index + 1;
+                    entry.querySelector('h3').textContent = `Award-Vorschlag #${number}`;
+                    entry.querySelector('.entry-number').textContent = number;
+                });
+                entryCount = entries.length;
+            }
+            
+            // Form submission
+            awardForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                let isValid = true;
+                const suggestions = awardForm.querySelectorAll('.award-suggestion');
+                suggestions.forEach(textarea => {
+                    if (!textarea.value.trim()) {
+                        textarea.classList.add('border-red-500');
+                        isValid = false;
+                    } else {
+                        textarea.classList.remove('border-red-500');
+                    }
+                });
+                
+                if (isValid) {
+                    // Collect all award suggestions
+                    const awards = [];
+                    suggestions.forEach(textarea => {
+                        awards.push(textarea.value.trim());
+                    });
+                    
+                    // Update success message
+                    successMessage.textContent = `${awards.length} Award-Vorschlag${awards.length !== 1 ? 'e' : ''} erfolgreich eingereicht!`;
+                    
+                    // Show success modal
+                    successModal.classList.remove('hidden');
+                    
+                    // In a real application, you would send the data to a server here
+                    console.log('Award suggestions submitted:', awards);
+                }
+            });
+            
+            // Close modal
+            closeModalBtn.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+                // Reset form
+                awardForm.reset();
+                
+                // Remove all entries except the first one
+                const entries = awardEntries.querySelectorAll('.award-entry');
+                for (let i = 1; i < entries.length; i++) {
+                    awardEntries.removeChild(entries[i]);
+                }
+                
+                // Reset entry count
+                entryCount = 1;
+                
+                // Clear any validation styling
+                const firstTextarea = awardEntries.querySelector('.award-suggestion');
+                firstTextarea.classList.remove('border-red-500');
+            });
+        });
+    </script>
+</body>
+</html>
