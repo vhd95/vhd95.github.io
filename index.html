@@ -360,199 +360,108 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const awardForm = document.getElementById('awardForm');
-            const awardEntries = document.getElementById('awardEntries');
-            const addAwardBtn = document.getElementById('addAwardBtn');
-            const successModal = document.getElementById('successModal');
-            const successMessage = document.getElementById('successMessage');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const awardCounter = document.getElementById('awardCounter');
+       document.addEventListener('DOMContentLoaded', function () {
+        const awardForm = document.getElementById('awardForm');
+        const awardEntries = document.getElementById('awardEntries');
+        const addAwardBtn = document.getElementById('addAwardBtn');
+        const successModal = document.getElementById('successModal');
+        const successMessage = document.getElementById('successMessage');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const awardCounter = document.getElementById('awardCounter');
 
-            let entryCount = 1;
-            let submittedAwards = 99; // Dummy-Wert für bereits eingereichte Awards
+        let entryCount = 1;
+        let submittedAwards = 99; // Dummy-Wert für "Eingereichte Awards"
+        const API_URL = "https://script.google.com/macros/s/AKfycbxluznlc4bOcLlxx3H48d6vsKBvQe3lwc4_eazLEZkDfvAvemwW9melyCMxjp3Kc0HHvw/exec"; // Ersetze durch die URL deiner Apps Script Web App
 
-            // Zeige den initialen Counter-Wert an
-            awardCounter.textContent = submittedAwards;
+        // Display initial count
+        awardCounter.textContent = submittedAwards;
 
-            // Add event listener to the first remove button
-            setupRemoveButton(awardEntries.querySelector('.remove-entry'));
+        // Funktion zum Hinzufügen neuer Einträge
+        addAwardBtn.addEventListener('click', function () {
+            entryCount++;
 
-            // Add new award entry
-            addAwardBtn.addEventListener('click', function () {
-                entryCount++;
+            const newEntry = document.createElement('div');
+            newEntry.className = 'award-entry bg-white p-4 rounded-lg';
+            newEntry.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-500">Vorschlag ${entryCount}</span>
+                    <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <textarea class="award-suggestion w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none" rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
+            `;
+            awardEntries.appendChild(newEntry);
 
-                const newEntry = document.createElement('div');
-                newEntry.className = 'award-entry bg-white p-4 rounded-lg';
-                newEntry.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-medium text-gray-500">Vorschlag ${entryCount}</span>
-                        <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <div class="entry-number hidden">${entryCount}</div>
-                    </div>
-                    <textarea class="award-suggestion w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none" 
-                        rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
-                `;
-
-                awardEntries.appendChild(newEntry);
-
-                // Add event listener to remove button
-                setupRemoveButton(newEntry.querySelector('.remove-entry'));
-            });
-
-            // Setup remove button functionality
-            function setupRemoveButton(removeBtn) {
-                removeBtn.addEventListener('click', function () {
-                    const entry = this.closest('.award-entry');
-
-                    // Check if this is the last entry
-                    const allEntries = awardEntries.querySelectorAll('.award-entry');
-                    if (allEntries.length <= 1) {
-                        // If it's the last entry, just clear it instead of removing
-                        const textarea = entry.querySelector('.award-suggestion');
-                        textarea.value = '';
-                        return;
-                    }
-
-                    // Otherwise remove the entry
-                    awardEntries.removeChild(entry);
-                    updateEntryNumbers();
-                });
-            }
-
-            // Update entry numbers after removal
-            function updateEntryNumbers() {
-                const entries = awardEntries.querySelectorAll('.award-entry');
-                entries.forEach((entry, index) => {
-                    const number = index + 1;
-                    entry.querySelector('span').textContent = `Vorschlag ${number}`;
-                    entry.querySelector('.entry-number').textContent = number;
-                });
-                entryCount = entries.length;
-            }
-
-            // Form submission
-            awardForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                // Validate form
-                let isValid = true;
-                const suggestions = awardForm.querySelectorAll('.award-suggestion');
-                suggestions.forEach(textarea => {
-                    if (!textarea.value.trim()) {
-                        const parentEntry = textarea.closest('.award-entry');
-                        parentEntry.classList.add('border-red-500');
-                        isValid = false;
-                    } else {
-                        const parentEntry = textarea.closest('.award-entry');
-                        parentEntry.classList.remove('border-red-500');
-                    }
-                });
-
-                if (isValid) {
-                    // Collect all award suggestions
-                    const awards = [];
-                    suggestions.forEach(textarea => {
-                        awards.push(textarea.value.trim());
-                    });
-
-                    // Update counter
-                    submittedAwards += awards.length;
-                    awardCounter.textContent = submittedAwards;
-
-                    // Update success message
-                    successMessage.textContent = `${awards.length} Award-Vorschlag${awards.length !== 1 ? 'e' : ''} erfolgreich eingereicht!`;
-
-                    // Show success modal
-                    successModal.classList.remove('hidden');
-
-                    // In a real application, you would send the data to a server here
-                    console.log('Award suggestions submitted:', awards);
-                }
-            });
-
-            // Close modal
-            closeModalBtn.addEventListener('click', function () {
-                successModal.classList.add('hidden');
-                // Reset form
-                awardForm.reset();
-
-                // Remove all entries except the first one
-                const entries = awardEntries.querySelectorAll('.award-entry');
-                for (let i = 1; i < entries.length; i++) {
-                    awardEntries.removeChild(entries[i]);
-                }
-
-                // Reset entry count
-                entryCount = 1;
-
-                // Clear any validation styling
-                const firstEntry = awardEntries.querySelector('.award-entry');
-                firstEntry.classList.remove('border-red-500');
-            });
-
-            // Carousel functionality
-            const carouselInner = document.getElementById('carouselInner');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const carouselIndicators = document.getElementById('carouselIndicators');
-
-            const carouselItems = carouselInner.querySelectorAll('.carousel-item');
-            let currentIndex = 0;
-
-            // Create indicators
-            carouselItems.forEach((_, index) => {
-                const indicator = document.createElement('div');
-                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
-                indicator.addEventListener('click', () => {
-                    goToSlide(index);
-                });
-                carouselIndicators.appendChild(indicator);
-            });
-
-            // Update carousel position
-            function updateCarousel() {
-                carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-                // Update indicators
-                const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
-                indicators.forEach((indicator, index) => {
-                    if (index === currentIndex) {
-                        indicator.classList.add('active');
-                    } else {
-                        indicator.classList.remove('active');
-                    }
-                });
-            }
-
-            // Go to specific slide
-            function goToSlide(index) {
-                currentIndex = index;
-                updateCarousel();
-            }
-
-            // Previous slide
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex === 0) ? carouselItems.length - 1 : currentIndex - 1;
-                updateCarousel();
-            });
-
-            // Next slide
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
-                updateCarousel();
-            });
-
-            // Auto-advance carousel every 5 seconds
-            setInterval(() => {
-                currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
-                updateCarousel();
-            }, 5000);
+            setupRemoveButton(newEntry.querySelector('.remove-entry'));
         });
+
+        // Funktion zum Entfernen eines Eintrags
+        function setupRemoveButton(button) {
+            button.addEventListener('click', function () {
+                const entry = button.closest('.award-entry');
+                entry.remove();
+                entryCount--;
+            });
+        }
+
+        // Event-Listener für das Absenden des Formulars
+        awardForm.addEventListener('submit', async function (event) {
+            event.preventDefault(); // Verhindert, dass das Formular standardmäßig abgesendet wird
+
+            const suggestions = awardEntries.querySelectorAll('.award-suggestion');
+            const entries = Array.from(suggestions)
+                .map(el => el.value.trim())
+                .filter(Boolean); // Entfernt leere Vorschläge
+
+            if (entries.length === 0) {
+                alert("Bitte füge mindestens einen Vorschlag hinzu.");
+                return;
+            }
+
+            try {
+                // Sende die Daten an die Web App
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ entries: entries })
+                });
+
+                const result = await response.json();
+                if (result.status === 'success') {
+                    // Erfolgsmeldung anzeigen
+                    successMessage.textContent = "Deine Award-Vorschläge wurden erfolgreich eingereicht!";
+                    successModal.classList.remove('hidden');
+                    submittedAwards += entries.length;
+                    awardCounter.textContent = submittedAwards;
+                    awardForm.reset();
+
+                    // Entferne zusätzliche Einträge
+                    const additionalEntries = document.querySelectorAll('.award-entry:not(:first-child)');
+                    additionalEntries.forEach(entry => entry.remove());
+                    entryCount = 1;
+                } else {
+                    throw new Error(result.message || 'Unbekannter Fehler.');
+                }
+            } catch (error) {
+                console.error("Fehler beim Speichern der Daten:", error);
+                alert("Es gab einen Fehler beim Einreichen deiner Vorschläge. Bitte versuche es erneut.");
+            }
+        });
+
+        // Schließen des Modals
+        closeModalBtn.addEventListener('click', function () {
+            successModal.classList.add('hidden');
+        });
+
+        // Initialisiere ersten Entfernen-Button
+        setupRemoveButton(awardEntries.querySelector('.remove-entry'));
+    });
+
     </script>
     <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'94dbd9c75789c81d',t:'MTc0OTU4OTc3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
 </body>
