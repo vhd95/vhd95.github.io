@@ -7,101 +7,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hassbro Awards</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <style>
         :root {
-            --hassbro-blue: #008FD5;
+            --hassbro-blue: #0284c7;
+            --hassbro-gradient-from: #0ea5e9;
+            --hassbro-gradient-to: #0369a1;
+            --bg-gradient-from: #f0f9ff;
+            --bg-gradient-to: #f8fafc;
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f8fafc;
+            background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            min-height: 100vh;
         }
         
         .hassbro-text {
-            color: var(--hassbro-blue);
+            background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .btn-hassbro {
-            background-color: var(--hassbro-blue);
-            transition: all 0.2s ease;
+            background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -1px rgba(14, 165, 233, 0.06);
         }
         
         .btn-hassbro:hover {
-            background-color: #0070a8;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(14, 165, 233, 0.05);
         }
         
         .btn-outline {
             border: 1px solid var(--hassbro-blue);
             color: var(--hassbro-blue);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .btn-outline:hover {
-            background-color: rgba(0, 143, 213, 0.1);
+            background-color: rgba(14, 165, 233, 0.1);
+            transform: translateY(-1px);
         }
         
         .award-entry {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
         
-        /* Nur eine Hervorhebung für den gesamten Eintrag */
         .award-entry:hover {
             border-color: #cbd5e1;
-            background-color: #f8fafc;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
         .award-entry:focus-within {
             border-color: var(--hassbro-blue);
-            box-shadow: 0 0 0 2px rgba(0, 143, 213, 0.2);
-            background-color: white;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
         }
         
-        /* Entferne separate Hervorhebung für Textarea */
         .award-suggestion {
             background-color: transparent;
             transition: none;
         }
         
-        .award-suggestion:hover {
-            background-color: transparent;
-        }
-        
-        .award-suggestion:focus {
-            background-color: transparent;
-        }
-        
         .logo-container {
             width: 50px;
             height: 50px;
-            background-color: var(--hassbro-blue);
+            background: linear-gradient(135deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: bold;
             font-size: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2), 0 2px 4px -1px rgba(14, 165, 233, 0.1);
         }
         
         .counter-badge {
-            background-color: var(--hassbro-blue);
+            background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
             color: white;
             border-radius: 9999px;
             padding: 0.25rem 0.75rem;
             font-size: 0.875rem;
             font-weight: 600;
+            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
         }
         
         /* Carousel Styles */
         .carousel {
             position: relative;
             overflow: hidden;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
         .carousel-inner {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .carousel-item {
@@ -110,42 +116,45 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 2rem;
         }
         
         .carousel-control {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 3rem;
+            height: 3rem;
             background-color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             z-index: 10;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            opacity: 0.8;
         }
         
         .carousel-control:hover {
-            background-color: var(--hassbro-blue);
+            background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
             color: white;
+            opacity: 1;
+            transform: translateY(-50%) scale(1.05);
         }
         
         .carousel-control-prev {
-            left: 0.5rem;
+            left: 1rem;
         }
         
         .carousel-control-next {
-            right: 0.5rem;
+            right: 1rem;
         }
         
         .carousel-indicators {
             position: absolute;
-            bottom: 0.5rem;
+            bottom: 1rem;
             left: 0;
             right: 0;
             display: flex;
@@ -154,35 +163,96 @@
         }
         
         .carousel-indicator {
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.2);
+            width: 2rem;
+            height: 0.25rem;
+            border-radius: 0.125rem;
+            background-color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .carousel-indicator.active {
-            background-color: var(--hassbro-blue);
-            transform: scale(1.2);
+            background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+            transform: scaleX(1.2);
         }
         
         .award-image {
-            width: 200px;
-            height: 200px;
-            background-color: #e2e8f0;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .award-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .award-image svg {
+            transition: all 0.3s ease;
+        }
+        
+        .award-image:hover svg {
+            transform: scale(1.1);
+            color: var(--hassbro-blue);
+        }
+        
+        /* Modern Card Design */
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Success Modal */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .success-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
-        <header class="py-5 border-b">
+        <header class="py-6 border-b border-sky-100 bg-white/80 backdrop-blur-md sticky top-0 z-30">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
@@ -191,111 +261,118 @@
                         </div>
                         <h1 class="text-2xl md:text-3xl font-bold hassbro-text">Hassbro</h1>
                     </div>
-                    <p class="text-sm md:text-base text-gray-600">Making The World Cry</p>
+                    <p class="text-sm md:text-base text-gray-600 font-medium">Making The World Cry</p>
                 </div>
             </div>
         </header>
 
         <!-- Main Content -->
-        <main class="flex-grow container mx-auto px-4 py-8 max-w-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-medium text-gray-800">Award-Vorschläge einreichen</h2>
-                <div class="flex items-center gap-2">
-                    <span class="text-sm text-gray-600">Eingereichte Awards:</span>
-                    <span class="counter-badge" id="awardCounter">99</span>
-                </div>
-            </div>
-            
-            <form id="awardForm" class="space-y-6 mb-12">
-                <div id="awardEntries" class="space-y-4">
-                    <!-- Initial Award Entry -->
-                    <div class="award-entry bg-white p-4 rounded-lg">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-gray-500">Vorschlag 1</span>
-                            <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <div class="entry-number hidden">1</div>
-                        </div>
-                        <textarea class="award-suggestion w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none" 
-                            rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
+        <main class="flex-grow container mx-auto px-4 py-10 max-w-2xl">
+            <div class="card p-8 mb-10 animate-fadeIn" style="animation-delay: 0.1s;">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">Award-Vorschläge einreichen</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-gray-600">Eingereichte Awards:</span>
+                        <span class="counter-badge" id="awardCounter">99</span>
                     </div>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button type="button" id="addAwardBtn" class="btn-outline py-2 px-4 rounded-md flex items-center justify-center text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-                        </svg>
-                        Weiteren Vorschlag hinzufügen
-                    </button>
-                    <button type="submit" class="btn-hassbro text-white py-2 px-6 rounded-md flex items-center justify-center text-sm">
-                        Einreichen
-                    </button>
-                </div>
-            </form>
+                <form id="awardForm" class="space-y-6">
+                    <div id="awardEntries" class="space-y-4">
+                        <!-- Initial Award Entry -->
+                        <div class="award-entry bg-white p-5 rounded-xl">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-500">Vorschlag 1</span>
+                                <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div class="entry-number hidden">1</div>
+                            </div>
+                            <textarea class="award-suggestion w-full px-4 py-3 border-0 focus:ring-0 focus:outline-none rounded-lg text-gray-700" 
+                                rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                        <button type="button" id="addAwardBtn" class="btn-outline py-3 px-5 rounded-xl flex items-center justify-center text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Weiteren Vorschlag hinzufügen
+                        </button>
+                        <button type="submit" class="btn-hassbro text-white py-3 px-6 rounded-xl flex items-center justify-center text-sm font-medium">
+                            Einreichen
+                        </button>
+                    </div>
+                </form>
+            </div>
             
             <!-- Wall of Fame Carousel -->
-            <div class="mb-8">
-                <h3 class="text-lg font-medium text-gray-800 mb-4">Wall of Fame</h3>
+            <div class="mb-8 animate-fadeIn" style="animation-delay: 0.3s;">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-sky-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    Wall of Fame
+                </h3>
                 
-                <div class="carousel bg-white shadow-sm">
+                <div class="carousel bg-white">
                     <div class="carousel-inner" id="carouselInner">
                         <!-- Carousel Item 1 -->
                         <div class="carousel-item">
                             <div class="award-image">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                                 </svg>
                             </div>
-                            <h4 class="text-base font-medium text-gray-800 mb-1">Der "Ich bin nicht wütend, nur enttäuscht" Award</h4>
-                            <p class="text-sm text-gray-600 text-center">Für Eltern, die Meister darin sind, ihre Kinder mit nur einem Blick zum Nachdenken zu bringen.</p>
+                            <h4 class="text-base font-semibold text-gray-800 mb-2">Der "Ich bin nicht wütend, nur enttäuscht" Award</h4>
+                            <p class="text-sm text-gray-600 text-center max-w-md">Für Eltern, die Meister darin sind, ihre Kinder mit nur einem Blick zum Nachdenken zu bringen.</p>
                         </div>
                         
                         <!-- Carousel Item 2 -->
                         <div class="carousel-item">
                             <div class="award-image">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                 </svg>
                             </div>
-                            <h4 class="text-base font-medium text-gray-800 mb-1">Der "Ich hatte eine Idee" Award</h4>
-                            <p class="text-sm text-gray-600 text-center">Für Kollegen, die in Meetings immer die gleiche Idee haben, nur mit anderen Worten.</p>
+                            <h4 class="text-base font-semibold text-gray-800 mb-2">Der "Ich hatte eine Idee" Award</h4>
+                            <p class="text-sm text-gray-600 text-center max-w-md">Für Kollegen, die in Meetings immer die gleiche Idee haben, nur mit anderen Worten.</p>
                         </div>
                         
                         <!-- Carousel Item 3 -->
                         <div class="carousel-item">
                             <div class="award-image">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h4 class="text-base font-medium text-gray-800 mb-1">Der "Ich zahle beim nächsten Mal" Award</h4>
-                            <p class="text-sm text-gray-600 text-center">Für Freunde, die ihre Geldbörse immer genau dann vergessen, wenn die Rechnung kommt.</p>
+                            <h4 class="text-base font-semibold text-gray-800 mb-2">Der "Ich zahle beim nächsten Mal" Award</h4>
+                            <p class="text-sm text-gray-600 text-center max-w-md">Für Freunde, die ihre Geldbörse immer genau dann vergessen, wenn die Rechnung kommt.</p>
                         </div>
                         
                         <!-- Carousel Item 4 -->
                         <div class="carousel-item">
                             <div class="award-image">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-                            <h4 class="text-base font-medium text-gray-800 mb-1">Der "Bin gleich da" Award</h4>
-                            <p class="text-sm text-gray-600 text-center">Für Menschen, deren "5 Minuten" mindestens eine halbe Stunde dauern.</p>
+                            <h4 class="text-base font-semibold text-gray-800 mb-2">Der "Bin gleich da" Award</h4>
+                            <p class="text-sm text-gray-600 text-center max-w-md">Für Menschen, deren "5 Minuten" mindestens eine halbe Stunde dauern.</p>
                         </div>
                     </div>
                     
                     <!-- Carousel Controls -->
                     <button class="carousel-control carousel-control-prev" id="prevBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                     </button>
                     <button class="carousel-control carousel-control-next" id="nextBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -307,23 +384,23 @@
         </main>
 
         <!-- Footer -->
-        <footer class="py-4 text-center text-sm text-gray-500 border-t">
+        <footer class="py-6 text-center text-sm text-gray-500 border-t border-sky-100 bg-white/80 backdrop-blur-md">
             <p>© 2023 Hassbro | Making The World Cry</p>
         </footer>
     </div>
 
     <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
+    <div id="successModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="modal-content p-8 max-w-sm mx-4">
             <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full success-icon mb-6">
+                    <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-800 mb-2">Vielen Dank!</h3>
-                <p id="successMessage" class="text-gray-600 mb-4 text-sm">Deine Award-Vorschläge wurden erfolgreich eingereicht.</p>
-                <button id="closeModalBtn" class="btn-hassbro text-white py-2 px-4 rounded-md text-sm">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Vielen Dank!</h3>
+                <p id="successMessage" class="text-gray-600 mb-6">Deine Award-Vorschläge wurden erfolgreich eingereicht.</p>
+                <button id="closeModalBtn" class="btn-hassbro text-white py-3 px-6 rounded-xl text-sm font-medium w-full">
                     Schließen
                 </button>
             </div>
@@ -349,23 +426,24 @@
             // Add event listener to the first remove button
             setupRemoveButton(awardEntries.querySelector('.remove-entry'));
             
-            // Add new award entry
+            // Add new award entry with animation
             addAwardBtn.addEventListener('click', function() {
                 entryCount++;
                 
                 const newEntry = document.createElement('div');
-                newEntry.className = 'award-entry bg-white p-4 rounded-lg';
+                newEntry.className = 'award-entry bg-white p-5 rounded-xl opacity-0';
+                newEntry.style.transform = 'translateY(10px)';
                 newEntry.innerHTML = `
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-sm font-medium text-gray-500">Vorschlag ${entryCount}</span>
-                        <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none">
+                        <button type="button" class="remove-entry text-gray-400 hover:text-red-500 focus:outline-none transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
                         <div class="entry-number hidden">${entryCount}</div>
                     </div>
-                    <textarea class="award-suggestion w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none" 
+                    <textarea class="award-suggestion w-full px-4 py-3 border-0 focus:ring-0 focus:outline-none rounded-lg text-gray-700" 
                         rows="3" placeholder="Beschreibe deinen Award-Vorschlag hier..." required></textarea>
                 `;
                 
@@ -373,6 +451,13 @@
                 
                 // Add event listener to remove button
                 setupRemoveButton(newEntry.querySelector('.remove-entry'));
+                
+                // Animate entry
+                setTimeout(() => {
+                    newEntry.style.transition = 'all 0.3s ease';
+                    newEntry.style.opacity = '1';
+                    newEntry.style.transform = 'translateY(0)';
+                }, 10);
             });
             
             // Setup remove button functionality
@@ -389,9 +474,15 @@
                         return;
                     }
                     
-                    // Otherwise remove the entry
-                    awardEntries.removeChild(entry);
-                    updateEntryNumbers();
+                    // Animate removal
+                    entry.style.opacity = '0';
+                    entry.style.transform = 'translateY(10px)';
+                    
+                    setTimeout(() => {
+                        // Remove the entry
+                        awardEntries.removeChild(entry);
+                        updateEntryNumbers();
+                    }, 300);
                 });
             }
             
@@ -417,6 +508,10 @@
                     if (!textarea.value.trim()) {
                         const parentEntry = textarea.closest('.award-entry');
                         parentEntry.classList.add('border-red-500');
+                        parentEntry.classList.add('shake');
+                        setTimeout(() => {
+                            parentEntry.classList.remove('shake');
+                        }, 600);
                         isValid = false;
                     } else {
                         const parentEntry = textarea.closest('.award-entry');
@@ -431,39 +526,78 @@
                         awards.push(textarea.value.trim());
                     });
                     
-                    // Update counter
+                    // Update counter with animation
+                    const oldCount = submittedAwards;
                     submittedAwards += awards.length;
-                    awardCounter.textContent = submittedAwards;
+                    
+                    // Animate counter
+                    const duration = 1000;
+                    const frameDuration = 1000/60;
+                    const totalFrames = Math.round(duration / frameDuration);
+                    const easeOutQuad = t => t * (2 - t);
+                    
+                    let frame = 0;
+                    const countUp = () => {
+                        frame++;
+                        const progress = easeOutQuad(frame / totalFrames);
+                        const currentCount = Math.round(oldCount + progress * (submittedAwards - oldCount));
+                        awardCounter.textContent = currentCount;
+                        
+                        if (frame < totalFrames) {
+                            requestAnimationFrame(countUp);
+                        } else {
+                            awardCounter.textContent = submittedAwards;
+                        }
+                    };
+                    requestAnimationFrame(countUp);
                     
                     // Update success message
                     successMessage.textContent = `${awards.length} Award-Vorschlag${awards.length !== 1 ? 'e' : ''} erfolgreich eingereicht!`;
                     
-                    // Show success modal
+                    // Show success modal with animation
                     successModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        successModal.classList.add('modal-show');
+                    }, 10);
                     
                     // In a real application, you would send the data to a server here
                     console.log('Award suggestions submitted:', awards);
                 }
             });
             
-            // Close modal
+            // Close modal with animation
             closeModalBtn.addEventListener('click', function() {
-                successModal.classList.add('hidden');
-                // Reset form
-                awardForm.reset();
-                
-                // Remove all entries except the first one
-                const entries = awardEntries.querySelectorAll('.award-entry');
-                for (let i = 1; i < entries.length; i++) {
-                    awardEntries.removeChild(entries[i]);
-                }
-                
-                // Reset entry count
-                entryCount = 1;
-                
-                // Clear any validation styling
-                const firstEntry = awardEntries.querySelector('.award-entry');
-                firstEntry.classList.remove('border-red-500');
+                successModal.classList.remove('modal-show');
+                setTimeout(() => {
+                    successModal.classList.add('hidden');
+                    
+                    // Reset form
+                    awardForm.reset();
+                    
+                    // Remove all entries except the first one with animation
+                    const entries = awardEntries.querySelectorAll('.award-entry');
+                    for (let i = 1; i < entries.length; i++) {
+                        const entry = entries[i];
+                        entry.style.opacity = '0';
+                        entry.style.transform = 'translateY(10px)';
+                    }
+                    
+                    setTimeout(() => {
+                        // Remove entries
+                        for (let i = 1; i < entries.length; i++) {
+                            if (entries[i].parentNode === awardEntries) {
+                                awardEntries.removeChild(entries[i]);
+                            }
+                        }
+                        
+                        // Reset entry count
+                        entryCount = 1;
+                        
+                        // Clear any validation styling
+                        const firstEntry = awardEntries.querySelector('.award-entry');
+                        firstEntry.classList.remove('border-red-500');
+                    }, 300);
+                }, 300);
             });
             
             // Carousel functionality
@@ -485,7 +619,7 @@
                 carouselIndicators.appendChild(indicator);
             });
             
-            // Update carousel position
+            // Update carousel position with smooth animation
             function updateCarousel() {
                 carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
                 
@@ -519,11 +653,38 @@
             });
             
             // Auto-advance carousel every 5 seconds
-            setInterval(() => {
+            let carouselInterval = setInterval(() => {
                 currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
                 updateCarousel();
             }, 5000);
+            
+            // Pause carousel on hover
+            const carousel = document.querySelector('.carousel');
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(carouselInterval);
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                carouselInterval = setInterval(() => {
+                    currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
+                    updateCarousel();
+                }, 5000);
+            });
+            
+            // Add shake animation for validation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+                .shake {
+                    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94ec2f90055ac7f1',t:'MTc0OTc2MTA2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94ec41e112b6e67c',t:'MTc0OTc2MTgxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
