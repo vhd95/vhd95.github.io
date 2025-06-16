@@ -104,82 +104,59 @@ document.addEventListener('DOMContentLoaded', function () {
         entryCount = entries.length;
     }
 
-    // Form submission
-    awardForm.addEventListener('submit', function (e) {
+    // Beim Absenden des Formulars
+    awardForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        // Validate form
-        let isValid = true;
-        const suggestions = awardForm.querySelectorAll('.award-suggestion');
-        suggestions.forEach(textarea => {
-            if (!textarea.value.trim()) {
-                const parentEntry = textarea.closest('.award-entry');
-                parentEntry.classList.add('border-red-500');
-                parentEntry.classList.add('shake');
-                setTimeout(() => {
-                    parentEntry.classList.remove('shake');
-                }, 600);
-                isValid = false;
-            } else {
-                const parentEntry = textarea.closest('.award-entry');
-                parentEntry.classList.remove('border-red-500');
+        // 1. Einsammeln der `award-suggestion`-Felder aus allen Einträgen
+        const suggestions = [];
+        const suggestionInputs = document.querySelectorAll('.award-suggestion');
+        suggestionInputs.forEach(input => {
+            if (input.value.trim()) {
+                suggestions.push(input.value.trim());
             }
         });
 
-        if (isValid) {
-            // Collect all award suggestions
-            const awards = [];
-            suggestions.forEach(textarea => {
-                awards.push(textarea.value.trim());
-            });
+        // 2. Prüfen, ob Daten vorhanden sind
+        if (suggestions.length === 0) {
+            alert("Bitte füge mindestens einen Vorschlag hinzu.");
+            return;
+        }
 
-            // Update success message
-            successMessage.textContent = `${awards.length} Award-Vorschlag${awards.length !== 1 ? 'e' : ''} erfolgreich eingereicht!`;
+        // 3. POST-Anfrage an das Google Apps Script senden
+        try {
+            const response = await fetch(
+                'https://script.google.com/macros/s/AKfycbxP1bSRDDdO5wcFP_lyvR6z1dgdPHC4QNvOi8GcQ3dcWGSBX4FYc-CprZSAlhEdcHHYOA/exec',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ suggestions: suggestions }), // Sende die Vorschläge
+                }
+            );
 
-            // Show success modal with animation
-            successModal.classList.remove('hidden');
-            setTimeout(() => {
-                successModal.classList.add('modal-show');
-            }, 10);
+            if (!response.ok) {
+                throw new Error(`Server returned error: ${response.status} ${response.statusText}`);
+            }
 
-            // In a real application, you would send the data to a server here
-            console.log('Award suggestions submitted:', awards);
+            const result = await response.json();
+            if (result.status === 'success') {
+                console.log('Erfolgreich gespeichert:', result.message);
+                successModal.classList.remove('hidden');
+                successMessage.textContent = `${suggestions.length} Award-Vorschlag${suggestions.length !== 1 ? 'e' : ''} erfolgreich eingereicht!`;
+            } else {
+                throw new Error(result.message || 'Fehler auf dem Server.');
+            }
+        } catch (error) {
+            console.error('Fehler bei der Datenübertragung:', error);
+            alert('Es gab einen Verbindungsfehler. Bitte überprüfe deine Internetverbindung und versuche es erneut.');
         }
     });
 
-    // Close modal with animation
+    // Modal schließen
     closeModalBtn.addEventListener('click', function () {
-        successModal.classList.remove('modal-show');
-        setTimeout(() => {
-            successModal.classList.add('hidden');
-
-            // Reset form
-            awardForm.reset();
-
-            // Remove all entries except the first one with animation
-            const entries = awardEntries.querySelectorAll('.award-entry');
-            for (let i = 1; i < entries.length; i++) {
-                const entry = entries[i];
-                entry.style.opacity = '0';
-                entry.style.transform = 'translateY(10px)';
-            }
-
-            setTimeout(() => {
-                // Remove entries
-                for (let i = 1; i < entries.length; i++) {
-                    if (entries[i].parentNode === awardEntries) {
-                        awardEntries.removeChild(entries[i]);
-                    }
-                }
-
-                // Reset entry count
-                entryCount = 1;
-
-                // Clear any validation styling
-                const firstEntry = awardEntries.querySelector('.award-entry');
-                firstEntry.classList.remove('border-red-500');
-            }, 300);
-        }, 300);
+        successModal.classList.add('hidden');
     });
 
     // Add shake animation for validation
