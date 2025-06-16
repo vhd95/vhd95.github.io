@@ -1,0 +1,255 @@
+:root {
+    --hassbro-blue: #0284c7;
+    --hassbro-gradient-from: #0ea5e9;
+    --hassbro-gradient-to: #0369a1;
+    --bg-gradient-from: #f0f9ff;
+    --bg-gradient-to: #f8fafc;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));
+    min-height: 100vh;
+}
+
+.hassbro-text {
+    background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-hassbro {
+    background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -1px rgba(14, 165, 233, 0.06);
+}
+
+.btn-hassbro:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(14, 165, 233, 0.05);
+}
+
+.btn-outline {
+    border: 1px solid var(--hassbro-blue);
+    color: var(--hassbro-blue);
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background-color: rgba(14, 165, 233, 0.1);
+    transform: translateY(-1px);
+}
+
+.award-entry {
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.award-entry:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.award-entry:focus-within {
+    border-color: var(--hassbro-blue);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+.award-suggestion {
+    background-color: transparent;
+    transition: none;
+}
+
+.logo-container {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2), 0 2px 4px -1px rgba(14, 165, 233, 0.1);
+}
+
+.counter-badge {
+    background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    color: white;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
+}
+
+/* Award Card Styles */
+.award-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.award-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.award-image {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.award-image svg {
+    transition: all 0.3s ease;
+    color: var(--hassbro-blue);
+}
+
+.award-card:hover .award-image svg {
+    transform: scale(1.1);
+}
+
+.award-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modern Card Design */
+.card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Success Modal */
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-show .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.success-icon {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+/* Tab styles */
+.tab {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab.active {
+    color: var(--hassbro-blue);
+    font-weight: 600;
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    border-radius: 1px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Stats card */
+.stats-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer styling */
+.modern-footer {
+    background: transparent;
+    border: none;
+}
+
+.footer-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.footer-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(90deg, var(--hassbro-gradient-from), var(--hassbro-gradient-to));
+    transition: width 0.3s ease;
+}
+
+.footer-link:hover:after {
+    width: 100%;
+}
+
+/* Brand logo in corner */
+.brand-corner {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
